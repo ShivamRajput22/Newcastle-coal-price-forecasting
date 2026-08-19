@@ -66,7 +66,7 @@ The objective is to move beyond prediction and build a **decision-support framew
 ### Historical Newcastle Coal Price Behaviour
 
 <p align="center">
-  <img src="assets/coal_price_historical_trend.png" width="900" alt="Historical Newcastle coal price trend">
+  <img src="assets/coal_price_historical_trend.png" width="900" alt="Historical Newcastle Coal Price Trend">
 </p>
 
 The historical series reveals several distinct commodity-market regimes.
@@ -207,6 +207,16 @@ flowchart LR
     I --> J["2025 Holdout"]
     J --> K["Jan-Jun 2026 Evaluation"]
     K --> L["Procurement Decision Support"]
+
+    classDef data fill:#E8F1FF,stroke:#2563EB,color:#1E3A8A,stroke-width:1.5px;
+    classDef model fill:#F3E8FF,stroke:#7C3AED,color:#4C1D95,stroke-width:1.5px;
+    classDef eval fill:#ECFDF5,stroke:#0F9D8A,color:#065F5B,stroke-width:1.5px;
+    classDef business fill:#FFF7ED,stroke:#F97316,color:#9A3412,stroke-width:1.5px;
+
+    class A,B,C,D,E,F data;
+    class G,H model;
+    class I,J,K eval;
+    class L business;
 ```
 
 The workflow keeps **data preparation, modelling, validation and business interpretation** connected within one forecasting pipeline.
@@ -253,7 +263,7 @@ Final model selection was based on the **unseen 2025 holdout period**.
 ### 2025 Holdout Model Comparison
 
 <p align="center">
-  <img src="assets/model_rmse_comparison.png" width="760" alt="XGBoost versus SARIMAX model comparison">
+  <img src="assets/model_rmse_comparison.png" width="760" alt="XGBoost versus SARIMAX Model Comparison">
 </p>
 
 **RMSE was used as the primary model-selection metric** because larger forecast errors can have disproportionate consequences for procurement cost, budgeting and contract timing.
@@ -287,6 +297,18 @@ flowchart LR
     B --> C["Energy Crisis"]
     C --> D["Price Correction"]
     D --> E["New Market Regime"]
+
+    classDef stable fill:#ECFDF5,stroke:#10B981,color:#065F46;
+    classDef warning fill:#FEF3C7,stroke:#F59E0B,color:#92400E;
+    classDef crisis fill:#FEE2E2,stroke:#EF4444,color:#991B1B;
+    classDef correction fill:#E0F2FE,stroke:#0284C7,color:#075985;
+    classDef new fill:#F3E8FF,stroke:#8B5CF6,color:#5B21B6;
+
+    class A stable;
+    class B warning;
+    class C crisis;
+    class D correction;
+    class E new;
 ```
 
 Commodity forecasting operates in a **non-stationary environment**.
@@ -297,14 +319,14 @@ This motivates continuous backtesting, monitoring and retraining in a production
 
 ---
 
-## 📈 Jan–Jun 2026 Evaluation
+## 📈 Jan-Jun 2026 Evaluation
 
 The selected XGBoost model was evaluated across **120 available trading-day observations** from January to June 2026.
 
 ### Daily Actual vs Forecast
 
 <p align="center">
-  <img src="assets/actual_vs_forecast_2026.png" width="900" alt="Actual versus forecast Newcastle coal price">
+  <img src="assets/actual_vs_forecast_2026.png" width="900" alt="Actual versus Forecast Newcastle Coal Price">
 </p>
 
 The model captured the broader progression of the market:
@@ -411,7 +433,7 @@ These thresholds are intended as a **decision-support framework**, not automatic
 
 ---
 
-### Jan–Jun Procurement View
+### Jan-Jun Procurement View
 
 | Month   | Forecast Avg. | Market View    | Potential Action                      |
 | ------- | ------------: | -------------- | ------------------------------------- |
@@ -428,19 +450,51 @@ These thresholds are intended as a **decision-support framework**, not automatic
 
 ```mermaid
 flowchart TD
-    A["Total Coal Requirement"]
+    A["⚫ Total Coal Requirement"]
 
-    A --> B["BASE"]
-    A --> C["FLEX"]
-    A --> D["SPOT"]
+    A --> B["🛡️ BASE"]
+    A --> C["🔄 FLEX"]
+    A --> D["⚡ SPOT"]
 
-    B --> E["Lock Confirmed Demand"]
-    C --> F["Maintain Contract Flexibility"]
-    D --> G["Short-Term Operational Needs"]
+    B --> E["🔒 Lock Confirmed Demand"]
+    C --> F["📑 Maintain Contract Flexibility"]
+    D --> G["⏱️ Short-Term Operational Needs"]
 
-    E --> H["Balanced Procurement Exposure"]
+    E --> H["⚖️ Balanced Procurement Exposure"]
     F --> H
     G --> H
+
+    classDef total fill:#7C3AED,stroke:#5B21B6,stroke-width:2px,color:#FFFFFF;
+    classDef base fill:#2563EB,stroke:#1D4ED8,stroke-width:2px,color:#FFFFFF;
+    classDef flex fill:#0F9D8A,stroke:#087F70,stroke-width:2px,color:#FFFFFF;
+    classDef spot fill:#F97316,stroke:#EA580C,stroke-width:2px,color:#FFFFFF;
+
+    classDef baseDetail fill:#EFF6FF,stroke:#2563EB,stroke-width:2px,color:#1E3A8A;
+    classDef flexDetail fill:#ECFDF5,stroke:#0F9D8A,stroke-width:2px,color:#065F5B;
+    classDef spotDetail fill:#FFF7ED,stroke:#F97316,stroke-width:2px,color:#9A3412;
+
+    classDef outcome fill:#173B74,stroke:#0F2B59,stroke-width:2px,color:#FFFFFF;
+
+    class A total;
+    class B base;
+    class C flex;
+    class D spot;
+
+    class E baseDetail;
+    class F flexDetail;
+    class G spotDetail;
+
+    class H outcome;
+
+    linkStyle 0 stroke:#2563EB,stroke-width:2px;
+    linkStyle 1 stroke:#0F9D8A,stroke-width:2px;
+    linkStyle 2 stroke:#F97316,stroke-width:2px;
+
+    linkStyle 3 stroke:#2563EB,stroke-width:2px;
+    linkStyle 4 stroke:#0F9D8A,stroke-width:2px;
+    linkStyle 5 stroke:#F97316,stroke-width:2px;
+
+    linkStyle 6,7,8 stroke:#173B74,stroke-width:2px;
 ```
 
 **Base**
@@ -489,6 +543,18 @@ flowchart LR
     G --> H["Rolling Backtesting"]
     H --> I["Model Retraining"]
     I --> A
+
+    classDef data fill:#E8F1FF,stroke:#2563EB,color:#1E3A8A,stroke-width:1.5px;
+    classDef feature fill:#F3E8FF,stroke:#7C3AED,color:#5B21B6,stroke-width:1.5px;
+    classDef model fill:#E0F2FE,stroke:#0284C7,color:#075985,stroke-width:1.5px;
+    classDef decision fill:#FFF7ED,stroke:#F97316,color:#9A3412,stroke-width:1.5px;
+    classDef monitor fill:#ECFDF5,stroke:#10B981,color:#065F46,stroke-width:1.5px;
+
+    class A,B data;
+    class C feature;
+    class D,E model;
+    class F decision;
+    class G,H,I monitor;
 ```
 
 ### Production Enhancements
